@@ -47,10 +47,10 @@ To turn off your VM, from the same directory run `vagrant halt`. To remove it co
 
 ## Using your new VM
 
-You will be a user called `vagrant` accessing the VM just as if you had logged into your
-console on your physical host machine. That use has passwordless super-user status, so you
-can do any command that requires elevated privileges using `sudo` and also become root by
-typing `sudo su -` (type `exit` to get back to a normal non-elevated command prompt.)
+Whenever you SSH in by running `vagrant ssh`, you will be a user called `vagrant` accessing the VM just as if you had logged into your console on your physical host machine.
+That user has passwordless super-user status, so you can do any command that requires
+elevated privileges using `sudo` and also become root by typing `sudo su -`
+(type `exit` to get back to a normal non-elevated command prompt.)
 
 In your home directory you will find a folder called `data` that will sync to a data folder
 on your host machine where you initially set up the VM. Doing your coding work there will
