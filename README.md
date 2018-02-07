@@ -63,6 +63,14 @@ Django application.
 
 Creating a Django project is as easy as setting up a pipenv in `~vagrant/data` on the VM via
 `pipenv install django` (`pipenv install 'django<2'` for 1.11), and then loading that pipenv
-using `pipenv shell` from the `data` dir. Then you can use `django-admin startproject` to
+using `pipenv shell` from the `data` dir. Then you can use `django-admin startproject myproj` to
 begin a project. All of these changes to data should be mirrored to the data directory on
 your host system.
+
+## A note about running Django
+
+When you run the development server for Django, you will need to add one extra instruction.
+Django's usual `python manage.py runserver` will need to be run as follows to ensure that you
+can access it at the usual `localhost:8000` from your web browser. Instead type:
+
+`python manage.py runserver 0.0.0.0:8000`
