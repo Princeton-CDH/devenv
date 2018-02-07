@@ -1,3 +1,5 @@
 # Vagrant specific ignores
 .vagrant/
 *.log
+# ignore the shared data dir that's created
+data/

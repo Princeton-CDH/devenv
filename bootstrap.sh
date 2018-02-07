@@ -19,7 +19,7 @@ if [ ! -f /etc/init.d/mysql* ]; then
 
   # install mysql-server and common files
   echo "Installing MySQL..."
-  apt-get install -y mysql-server mysql-common
+  apt-get install -y mysql-server
 
   # Mime the functionality of mysql_secure_installation
   # except root password, because we already randomized it.
@@ -37,6 +37,9 @@ else
   echo "MySQL installed, skipping installation"
 fi
 
+# Make sure MySQL is enabled (it should be, but being safe)
+systemctl enable mysql
+
 # Install other utilities, including python3 and pipenv
-apt-get install -y python3-pip tree nano vim
+apt-get install -y python3-pip tree nano vim git libmysqlclient-dev
 pip3 install --upgrade pipenv
