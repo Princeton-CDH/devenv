@@ -16,12 +16,19 @@ To use this Vagrant file you will need up to date copies of [Vagrant](https://ww
 installation fails, go to System Preferences -> Security and Privacy -> General and allow
 software written by Oracle to be installed.**
 
+
+The easiest way to acquire this Vagrantfile and associated setup is to clone is using git.
+If it is not already installed on your system, you should do so. On MacOS, you can do so by
+installing XCode or get a more up to date version using [Homebrew](https://brew.sh/)
+(`brew install git`) or even the [Github for Mac](https://desktop.github.com/) install
+(the desktop tools have an option to install commmand line tools).
+
 Once the prerequisite software is installed, clone this repository using:
 
-`Git clone command goes here`
+`git clone https://github.com/Princeton-CDH/devenv.git`
 
 Then from a terminal, change to the directory where you cloned the repository and run `vagrant up`
-If I installed it in my home directory `~` it would be something like:
+If I cloned the repo from my home directory `~` it would be something like:
 
 ```
 cd ~/devenv
@@ -33,6 +40,10 @@ finish. From there, the VM is active on your machine, and has its own virtual me
 
 You can access it via SSH (secure shell) by typing `vagrant ssh` from the directory where
 the Vagrantfile is located (i.e. from `~/devenv` above).
+
+To turn off your VM, from the same directory run `vagrant halt`. To remove it completely
+(warning: this **will** delete the virtual drive that holds your VM files), use `vagrant destroy`.
+
 
 ## Using your new VM
 
