@@ -1,0 +1,3 @@
+# Vagrant specific ignores
+.vagrant/
+*.log
