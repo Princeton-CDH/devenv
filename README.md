@@ -35,7 +35,7 @@ cd ~/devenv
 vagrant up
 ```
 
-Vagrant should then download the trust/xenial64 image, update and configure it, and then
+Vagrant should then download the trusty/xenial64 image, update and configure it, and then
 finish. From there, the VM is active on your machine, and has its own virtual memory, OS, etc.
 
 You can access it via SSH (secure shell) by typing `vagrant ssh` from the directory where
@@ -64,7 +64,7 @@ Django application.
 Creating a Django project is as easy as setting up a pipenv in `~vagrant/data` on the VM via
 `pipenv install django` (`pipenv install 'django<2'` for 1.11), and then loading that pipenv
 using `pipenv shell` from the `data` dir. Then you can use `django-admin startproject myproj` to
-begin a project. All of these changes to data should be mirrored to the data directory on
+begin a project. All of these changes to `data` should be mirrored to the `data` directory on
 your host system.
 
 ## A note about running Django
