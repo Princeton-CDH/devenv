@@ -81,3 +81,70 @@ Django complains of connections not coming from an allowed host. Simply changing
 as it allows connections to your IP with any declared HTTP header. Normally you'd limit to the
 site name that you want to serve your app on!) You should be able to open up `settings.py` in
 your text editor of choice on your host system from the shared `data` directory.
+
+
+## Connecting VM Django Instance to your VM's MySQL server
+Typically Django instances have their own user and database. The first step in this configuration
+is making the database user and a database on which it has all access privileges (i.e., it can
+create tables, drop them, add/edit/insert).
+
+Your VM's MySQL is set up to be fully accessible as root (with the root system account mapping
+to the root MySQL account). In Vagrant ssh session, just `sudo mysql`.
+
+Then from the MySQL client issue a command like:
+
+`CREATE USER 'myproj'@'localhost' IDENTIFIED BY 'secretpasswordhere';`
+
+where 'myproj' is your project name and you use some sort of password in the `IDENTIFIED BY` clause.
+
+After that command succeeds, you'll also need a database. A common convention is to name the
+database using the same name as the user that will use it:
+
+`CREATE SCHEMA myproj CHARSET UTF8;`
+
+This creates `myproj` and makes its default character set UTF-8 (which is a modern multipurpose text encoding).
+
+Finally, grant the 'myproj' user access to the 'myproj' database:
+
+`GRANT ALL ON myproj.* TO 'myproj'@'localhost';`
+
+(If you're wondering about the localhost bit, you're saying that this user cannot use remote
+connections, which are a security risk.)
+
+Then in your Django `settings.py`, you'll want to remove the following stanza:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+```
+
+Replace it with:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'myproj',
+        'USER': 'myproj',
+        'PASSWORD': 'secretpasswordhere',
+        'HOST': 'localhost',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+        'PORT': '',
+    },
+
+}
+```
+This looks hairy but it only does a few things: Uses the MySQL database backend for Django,
+sets the username and password to login, points at localhost for the server location, and
+requires MySQL to warn aggressively if data that would be truncated by a column is entered.
+
+You'll also need to `pipenv install mysqlclient` from outside your virtualenvironment!
+
+At this point, from within your pipenv created virtualenvironment (`pipenv shell`), you should
+now be able to run `python manage.py migrate` to create database migrations.
