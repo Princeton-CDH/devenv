@@ -144,7 +144,8 @@ This looks hairy but it only does a few things: Uses the MySQL database backend 
 sets the username and password to login, points at localhost for the server location, and
 requires MySQL to warn aggressively if data that would be truncated by a column is entered.
 
-You'll also need to `pipenv install mysqlclient` from outside your virtualenvironment!
+You'll also need to `pipenv install mysqlclient` from outside your virtualenvironment
+but within Vagrant (i.e., `~` as `vagrant@xenial`)!
 
 At this point, from within your pipenv created virtualenvironment (`pipenv shell`), you should
 now be able to run `python manage.py migrate` to create database migrations.
