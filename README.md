@@ -74,3 +74,10 @@ Django's usual `python manage.py runserver` will need to be run as follows to en
 can access it at the usual `localhost:8000` from your web browser. Instead type:
 
 `python manage.py runserver 0.0.0.0:8000`
+
+You may also need to edit the `ALLOWED_HOSTS` setting in `data/myproj/myproj/settings.py` if
+Django complains of connections not coming from an allowed host. Simply changing it to:
+`ALLOWED_HOSTS = ["*"]` should do the trick. (Note: This would be a bad idea in production
+as it allows connections to your IP with any declared HTTP header. Normally you'd limit to the
+site name that you want to serve your app on!) You should be able to open up `settings.py` in
+your text editor of choice on your host system from the shared `data` directory.
