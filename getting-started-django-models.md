@@ -13,7 +13,9 @@ data.
 
 2. Copy your sqldump into your shared data folder so it will be available
    to you within the virtual environment.  You can either use the finder
-   to drap or copy into `devenv/data` or copy from the command line:
+   to drap or copy into `devenv/data` or copy from the command line. The command
+   below assumes that you have your SQL dump in the same folder as your devenv,
+   e.g. HOME (`~`):
 
    `cp yyyy-mmm-dd_dbname.sql devenv/data/`
 
@@ -176,10 +178,3 @@ data.
 When you end your session, you should `exit` your pipenv shell, `exit` your
 shell session on your virtual machine, and then use `vagrant halt` to
 shutdown the VM.
-
-
-
-
-
-
-
