@@ -133,6 +133,17 @@ data.
 
     `python manage.py createsuperuser`
 
+11. To check that everything is working properly, start your django
+    development server and log in to your admin site.
+
+    `python manage.py runserver 0.0.0.0:8000`
+
+    You should be able to access and log into your admin site in a
+    browser at http://localhost:8000/admin/
+
+    To stop the runserver, use `ctrl-c` in the terminal where it is
+    running.
+
 ## Django Admin
 
 1. Register your models to make them available in Django admin.  Create
