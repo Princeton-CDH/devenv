@@ -100,7 +100,7 @@ where 'myproj' is your project name and you use some sort of password in the `ID
 After that command succeeds, you'll also need a database. A common convention is to name the
 database using the same name as the user that will use it:
 
-`CREATE SCHEMA myproj CHARSET UTF8;`
+`CREATE DATABASE myproj CHARSET UTF8;`
 
 This creates `myproj` and makes its default character set UTF-8 (which is a modern multipurpose text encoding).
 
