@@ -131,7 +131,7 @@ data.
 10. Create a user account for yourself so you'll be able to login
     to your new site.
 
-    `python manage.py createuser`
+    `python manage.py createsuperuser`
 
 ## Django Admin
 
