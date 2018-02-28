@@ -208,7 +208,8 @@ should run a command:
                 'level': 'DEBUG',
             },
         },
-    }```
+    }
+    ```
 
     To turn this off later, you can switch `'DEBUG'` to `'INFO'`.
 
@@ -223,8 +224,8 @@ When you end your session, you should exit everything and shut down your
 virtual machine.  Use `ctrl+c` to stop Django runserver if it is still
 running.
 
-    ```
-    (pipenv) vagrant:> exit
-    vagrant:> exit
-    > vagrant halt
-    ```
+ ```
+ (pipenv) vagrant:> exit
+ vagrant:> exit
+ > vagrant halt
+ ```
