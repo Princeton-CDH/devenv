@@ -7,11 +7,11 @@ data.
 
 The following conventions are used to indicate the context where you
 should run a command:
-    * `>` - shell on your local machine
-    * `vagrant:>` - shell on your vagrant vm
-    * `mysql>` - run in mysql shell (after running `sudo mysql` from the terminal)
-    * `(pipenv) vagrant:>` - pipenv shell on your vagrant vm
 
+ * `>` - shell on your local machine
+ * `vagrant:>` - shell on your vagrant vm
+ * `mysql>` - run in mysql shell (after running `sudo mysql` from the terminal)
+ * `(pipenv) vagrant:>` - pipenv shell on your vagrant vm
 
 ## Prep
 
