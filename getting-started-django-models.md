@@ -47,12 +47,14 @@ should run a command:
 1. Create a database and user for the project database to use with Django.
    First enter the MySQL console:
 
-   `vagrant:> sudo mysql`
+   ```shell
+   vagrant:> sudo mysql
+   ```
 
    Then enter the SQL commands to create the user, database, and give
    the user permissions on the database.
 
-    ```
+    ```sql
     mysql> CREATE USER 'myproj'@'localhost' IDENTIFIED BY 'mypassword';
     mysql> CREATE DATABASE myproj CHARSET utf8mb4;
     mysql> GRANT ALL ON myproj.* TO 'myproj'@'localhost';
@@ -62,27 +64,37 @@ should run a command:
    create all of your tables and foreign key relationships, and load any
    data included in your export:
 
-    `vagrant:> sudo mysql myproj < data/yyyy-mmm-dd_dbname.sql`
+    ```shell
+    vagrant:> sudo mysql myproj < data/yyyy-mmm-dd_dbname.sql
+    ```
 
 ## Django project setup
 
 1. Change directory into the shared data folder:
 
-    `vagrant:> cd data`
+    ```shell
+    vagrant:> cd data
+    ```
 
 2. Install Django and the Python MySQL client if you have not already done so:
 
-    `vagrant:> pipenv install 'django<2' mysqlclient`
+    ```shell
+    vagrant:> pipenv install 'django<2' mysqlclient
+    ```
 
 2. Activate your python environment:
 
-    `vagrant:> pipenv shell`
+    ```shell
+    vagrant:> pipenv shell
+    ```
 
 4. Create a new django project.  Recommended: name the django project based
    on a short or abbreviated version of your research project name.
    Use lower case without spaces; if you must delimit words, use an underscore.
 
-    `(pipenv) vagrant:>django-admin startproject myproj`
+    ```shell
+    (pipenv) vagrant:>django-admin startproject myproj
+    ```
 
 5. In the editor of your choice, edit the settings for your new django
     project at `data/myproj/myproj/settings.py`.
@@ -116,36 +128,46 @@ should run a command:
 6. Change directory into the newly created django project so that you
     can run django manage commands:
 
-    `(pipenv) vagrant:> cd myproj`
+    ```shell
+    (pipenv) vagrant:> cd myproj
+    ```
 
 7. Create a new django "app" that will contain your models and
     customizations.  Recommended: name the app based on a central entity
     from your database schema.  Use lower case without spaces;
     if you must delimit words, use an underscore.
 
-    ```
+    ```shell
     (pipenv) vagrant:> mkdir myproj/myentity
     (pipenv) vagrant:> python manage.py startapp myentity myproj/myentity
     ```
 
 8. Generate django models from your existing database structure:
 
-    `(pipenv) vagrant:> python manage.py inspectdb > myproj/myentity/models.py`
+    ```shell
+    (pipenv) vagrant:> python manage.py inspectdb > myproj/myentity/models.py
+    ```
 
 9. Run database migrations to create other database tables that django
     needs to run:
 
-    `(pipenv) vagrant:> python manage.py migrate`
+    ```shell
+    (pipenv) vagrant:> python manage.py migrate
+    ```
 
 10. Create a user account for yourself so you'll be able to login
     to your new site.
 
-    `(pipenv) vagrant:> python manage.py createsuperuser`
+    ```shell
+    (pipenv) vagrant:> python manage.py createsuperuser
+    ```
 
 11. To check that everything is working properly, start your django
     development server and log in to your admin site.
 
-    `(pipenv) vagrant:> python manage.py runserver 0.0.0.0:8000`
+    ```shell
+    (pipenv) vagrant:> python manage.py runserver 0.0.0.0:8000
+    ```
 
     You should be able to access and log into your admin site in a
     browser at http://localhost:8000/admin/
@@ -182,7 +204,9 @@ should run a command:
 
 3. Start your django development server and log in to your admin site.
 
-    `(pipenv) vagrant:> python manage.py runserver 0.0.0.0:8000`
+    ```shell
+    (pipenv) vagrant:> python manage.py runserver 0.0.0.0:8000
+    ```
 
     You should be able to access it in a browser at http://localhost:8000/admin/
 
@@ -224,7 +248,7 @@ When you end your session, you should exit everything and shut down your
 virtual machine.  Use `ctrl+c` to stop Django runserver if it is still
 running.
 
- ```
+ ```shell
  (pipenv) vagrant:> exit
  vagrant:> exit
  > vagrant halt
