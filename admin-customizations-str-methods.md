@@ -1,4 +1,4 @@
-# Admin niceties and string methods
+# Admin customizations and string methods
 
 Django has many options for formatting your admin views beyond simply adding
 models. It also has ways of letting you set intelligent text options to identify
