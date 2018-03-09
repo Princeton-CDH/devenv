@@ -21,7 +21,7 @@ class Person(models.Model):
 ```
 
 Django will merrily display all of the instances of this in your admin, if you
-add it using directions found [here](getting-started-django-models.md#Django Admin) under step 1 of the tutorial.
+add it using directions found [here](getting-started-django-models.md#django-admin) under step 1 of the tutorial.
 
 However, you will see many confusing 'Person objects' scattered throughout. One
 way to make this more useful (and crucially make objects selectable by a human
