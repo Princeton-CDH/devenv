@@ -42,7 +42,7 @@ From your Vagrant machine(i.e., after you type `vagrant up` and `vagrant ssh`):
 you are in the Vagrant VM. You don't need to type it.)
 
 ```shell
-vagrant:$ mysqldump mydb -uroot -p > ~/data/YYYY-MM-DD-mydb.sql  
+vagrant:$ sudo mysqldump mydb > ~/data/YYYY-MM-DD-mydb.sql  
 ```
 
 (Where YYYY-MM-DD is today's date and the and mydb is your database name.)
