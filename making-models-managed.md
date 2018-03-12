@@ -71,6 +71,11 @@ This, assuming it works, will produce an `initial` migration in
 `yourproject/yourmodule/migrations` that, if necessary, could recreate the
 current structure of your database from scratch.
 
+Go ahead and run it so that Django thinks it has been run, using the `--fake-initial` flag:
+```shel
+vagrant:$ python manage.py migrate --fake-initial
+```
+
 ## Making changes
 
 Let's use Person as an example again.
