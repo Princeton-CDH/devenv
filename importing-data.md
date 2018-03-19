@@ -1,6 +1,17 @@
 # Importing data into Django
 
-## First, backing up and dropping databases
+## A word of warning
+
+Before you follow any other bit of this guide, you should:
+
+1. Read the whole thing through once. There are many instructions and they sometimes
+involve actions that might be destructive to data.
+
+2. Make sure that you follow directions for making a backup of your database
+before running import scripts of any sort. These will be making changes to your
+data, and you will want to be able to quickly restore to a previous version.
+
+## Backing up and dropping databases
 
 In working on importing data from a CSV you are going to hit snags, and probably
 manage to import junk data a few times. That's OK and normal, provided that
