@@ -72,7 +72,7 @@ This, assuming it works, will produce an `initial` migration in
 current structure of your database from scratch.
 
 Go ahead and run it so that Django thinks it has been run, using the `--fake-initial` flag:
-```shel
+```shell
 vagrant:$ python manage.py migrate --fake-initial
 ```
 
