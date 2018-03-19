@@ -39,7 +39,7 @@ quick recoveries. Here's how you will do that, **when the time comes**.
 
 To that end, you'll need to engage in a two step process:
 
-1) Drop the previous database *once you have it backed up to an SQL dump*. The DROP
+1) Drop the previous database *provided you have a backup of your empty schema*. The DROP
 command is not to be taken lightly, but it is a tool to be used. In your Vagrant VM
 as root (you can do this handily by just typing `sudo mysql`), issue the following
 two commands in the MySQL console.
@@ -75,24 +75,27 @@ As an example, to create the file to house the import command code, issue the fo
 statements from the VM:
 
 ```shell
-vagrant:$ mkdir -p ~/data/projectfolder/myproject/myapp/management/commands
+vagrant:$ mkdir -p ~/data/myproject/myapp/management/commands
 ```
+
+(If you have an extra project folder in data above the folder that contains
+`manage.py`, insert it in the path accordingly.)
 
 Adjust as needed to land this in the 'module' portion of your Django project,
 with `management` being a folder at the same level as `models.py`.
 
-Then create a file named `import_mymodel.py` in `management/commands` and copy
+Then create a file named `import_mymodel.py` in `management/commands` and copy/paste
 the contents of the Gist above.
 
 ## Editing the script
 
 The script needs significant edits to make it work. It is hard to give a play
 by play because your models are all different, but these are the general steps
-(with some likely 'gotchas' explained):
+(with some likely 'gotchas' explained afterwards):
 
 1) Decide what model you're importing
 
-For this first import script, you should pick a model that it relatively simple
+For this first import script, you should pick a model that is relatively simple
 (i.e. no foreign keys) and prepare a CSV with headers ('name', 'location', etc.)
 in the first row. The script assumes that's what you have.
 
@@ -109,7 +112,7 @@ Once you know that model, edit the script to do the following:
     get right.
 
     1. Since you're just importing a single model, you should delete the rows that
-    have `address` on them in the example. Instead, just edit the following lines:
+    have `address` on them in the example. Then edit the following lines:
 
       ```python
       person = Person()
@@ -121,6 +124,7 @@ Once you know that model, edit the script to do the following:
 
       The code reads each row of the CSV into `row` and you can access each
       column by its name.
+
     2. Change the lines that assign columns to properties on the model:
 
         ```python
@@ -133,7 +137,9 @@ Once you know that model, edit the script to do the following:
         in brackets on row to match the column in your CSV that provides that info.
 
         (In Python, we're reading the value of each CSV row into a dictionary,
-        which uses a 'key' (`[last_name]`) to look up a 'value' within it.)
+        which uses a 'key' (`[last_name]`) to look up a 'value' within it.
+        I know it sounds redundant versus a model, but trust that there are good
+        reasons to use both.)
 
         Then edit the `save` statement to use the instance you just edited in.
 
@@ -146,8 +152,8 @@ Once you know that model, edit the script to do the following:
       ```
 
       Django's `manage.py` now knows about a command called `import_mymodel`
-      that takes the following syntax (which is set up in the `handle` method
-      of the python file):
+      that takes the following syntax (which is set up in the `handle`
+      and `add_arguments` methods of the python file):
 
       ```shell
       python manage.py import_mymodel ~/data/name_of_csv.csv
@@ -157,6 +163,10 @@ Once you know that model, edit the script to do the following:
       correctly, the command will run without comment and then if you load up
       the admin site, your model will now be populated with rows taken from the
       CSV you imported.
+
+      It probably didn't. (Even an experienced programmer rarely has their work
+      run fully as expected the first time.) See the [gotchas](#gotchas) section
+      below for some thoughts about likely errors you may have hit.
 
 
 ## A more complicated import: A Model with a Foreign Key
@@ -173,7 +183,8 @@ same row. For this exercise, I'm going to use person and address as in the sampl
 
 1) Setting up the CSV
 
-The first step is a CSV with an eye towards how to handle the data in a useful way. Let's assume models that look something like this:
+The first step is a CSV with an eye towards how to handle the data in a
+useful way. Let's assume models that look something like this:
 
 
 ```python
@@ -195,7 +206,7 @@ You might set up a CSV that looks something like:
 last_name,first_name,street_address,zip_code
 Doe,Jane,'123 Wilfred',99999
 Doe,John,'123 Wilfred',99999
-Person,Other,'456 Elsewhwere',123456
+Person,Other,'456 Elsewhere',123456
 ```
 
 This duplicates data, of course. A third normalized form database scheme would
@@ -204,16 +215,19 @@ works well for data entry.
 
 To import this, you need to do a few things:
 
-  1. Split the data that goes into the model with the ForeignKey field and set those fields.
+  1. Split the data that goes into the model with the ForeignKey field
+  and set those fields.
+
   2. Create a model instance of the foreign key object
   and then set its fields. You also need to **save it**. This lets you use it
   to create relationships. An `Address` instance needs to exist in the database
   before
   you can set it on the `Person` model.
 
-  We use a special method that Django has on the manager for each object in
-  the database to do that for `Address` called `get_or_create`. This looks for
-  an item that matches the parameters given and return it if it already exists
+  We use a special method that Django has on the manager (`objects`)
+  for each `Article` object in
+  the database. The method is called `get_or_create`. This looks for
+  an item that matches the parameters given and returns it if it already exists
   in the database, or it creates a new one if it does not exist. This helps
   remove duplicates as above with Jane and John Doe sharing the same address.
 
@@ -238,32 +252,39 @@ the script work.
 
 Some errors you may expect to hit in no particular order:
 
-* My script doesn't run or `python manage.py command_name` doesn't work.
+* **My script doesn't run or `python manage.py command_name` doesn't work.**
 This is likely caused by your directory structure being off (Django looks in a
 very rigidly set path for commands), or some similar problem. Remember that
 `management/commands` needs to be in the set of directories that are parallel
 with your `models.py`.
 
-* Your has Python syntax errors. These may pose a challenge in troubleshooting
-but are the easiest to fix. If you get complaints about indents, this is because
+* **I am getting errors about objects not existing or Python complaining about
+imports not working.** This probably results from the statement that imports your
+models. If your syntax is off, Python can't find the code that defines your
+model and import it into the command as it is run. Check to make sure that
+you are following the import syntax above and try to piece together where you
+might be off. Python, thankfully, follows the folder structure you've laid out.
+
+* **Python reports syntax errors.** These may pose a challenge in troubleshooting
+but are often the easiest to fix. If you get complaints about indents, this is because
 python expects indentations to be multiples of four spaces (with no mixed-in tabs).
 If your syntax editor is Sublime or Atom, it may even do you the courtesy of
 marking which indent is off. The error message will also specify a line number
 where things went wrong.
 
-* Your CSV and model mapping are off--or data isn't parsing as the right type.
+* **Your CSV and model mapping are off--or data isn't parsing as the right type.**
 Make sure that you're mapping `row['column_name']` to the right property and that
 it doesn't have any unexpected charactes or cruft. If you're parsing year dates as
 integers (for example), Django needs to be able to make a clean conversion to the
 right data type, so '1968' would work, but 'Dec. 1968' would make the script
 die.
 
-* You get complains about duplicates on unique fields. If you've marked any fields
+* **You get complaints about duplicates on unique fields.** If you've marked any fields
 as unique, you may be flagged that you have a duplicate during the import. The
 easiest way to fix it is probably to check your data and figure out why you
 have a duplicate in a field you thought was unique!
 
-* You have junk data from multiple import runs. Follow the instructions to
+* **You have junk data from multiple import runs.** Follow the instructions to
 `DROP` a database and restore from the clean backups that you made before
 experimenting with import scripts. This might be a good idea before running the
 final pass of your import scripts when you're happy with them in any case, just to
