@@ -59,9 +59,9 @@ vagrant:$ sudo mysql mydb < ~/data/YYYY-MM-DD-mydb.sql
 (where `YYY-MM-DD` is replaced by the name you used for your db backup)
 
 This should fully restore your database to the state it was in before any changes
-you may have made subsequently. The syntax we've seen before and pipes the
+you may have made subsequently. The syntax we've seen before. It pipes the
 contents of `YYYY-MM-DD-mydb.sql` to the `mysql` client, with one parameter
-(the name of the database that the dumps statements should apply to)
+(the name of the database that the dump's statements should apply to)
 
 ## Importing data -- first steps
 
@@ -78,7 +78,7 @@ statements from the VM:
 vagrant:$ mkdir -p ~/data/myproject/myapp/management/commands
 ```
 
-(If you have an extra project folder in data above the folder that contains
+(If you have an extra project folder in `data` above the folder that contains
 `manage.py`, insert it in the path accordingly.)
 
 Adjust as needed to land this in the 'module' portion of your Django project,
@@ -172,7 +172,7 @@ Once you know that model, edit the script to do the following:
 ## A more complicated import: A Model with a Foreign Key
 
 If all your models were separate tables with no links, this would be done and
-over, just recycle as necessary. Unfortunately, you are going to be dealing
+over, just recycle as necessary. You are going to be dealing
 with linked models. MySQL expresses this as a table with a link by foreign key
 from one row to another. Django expresses this as a ForeignKey field from one
 object to another (that it then reflects as a foreign key in SQL).
