@@ -38,13 +38,13 @@ class MyObjectListView(ListView):
       dictionary_list = []
       for model in mymodels:
           model_dict = {}
-          model_dict['field1'] = model_dict.field1
-          model_dict['field2'] = model_dict.field2
+          model_dict['field1'] = model.field1
+          model_dict['field2'] = model.field2
           # Here we're referencing a foreign key object and then its name
-          model_dict['fk_obj'] = model_dict.fk_obj.name
+          model_dict['fk_obj'] = model.fk_obj.name
           # Here we're grabbing a Django managed m2m and th
           model_dict['topics'] = [topic.name for topic
-                                in ';'.join(model_dict.topics.all())
+                                in ';'.join(model.topics.all())
                                 # the syntax looks hairy but it isn't -- we're just telling python
                                 # to get all the related topics, and then make a list of their name
                                 # properties and join them with a semi-colon
