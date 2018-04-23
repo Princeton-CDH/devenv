@@ -37,22 +37,22 @@ class MyObjectListView(ListView):
       # but we'll look at ways to filter it down later
       dictionary_list = []
       for model in mymodels:
-        model_dict = {}
-        model_dict['field1'] = model_dict.field1
-        model_dict['field2'] = model_dict.field2
-        # Here we're referencing a foreign key object and then its name
-        model_dict['fk_obj'] = model_dict.fk_obj.name
-        # Here we're grabbing a Django managed m2m and th
-        model_dict['topics'] = [topic.name for topic
+          model_dict = {}
+          model_dict['field1'] = model_dict.field1
+          model_dict['field2'] = model_dict.field2
+          # Here we're referencing a foreign key object and then its name
+          model_dict['fk_obj'] = model_dict.fk_obj.name
+          # Here we're grabbing a Django managed m2m and th
+          model_dict['topics'] = [topic.name for topic
                                 in ';'.join(model_dict.topics.all())
-        # the syntax looks hairy but it isn't -- we're just telling python
-        # to get all the related topics, and then make a list of their name
-        # properties and join them with a semi-colon
+                                # the syntax looks hairy but it isn't -- we're just telling python
+                                # to get all the related topics, and then make a list of their name
+                                # properties and join them with a semi-colon
 
         # now we append it to the list
-        dictionary_list.append(model_dict)
+          dictionary_list.append(model_dict)
 
-        return dictionary_list
+      return dictionary_list
 
     def render_to_response(self, context, **kwargs):
 
