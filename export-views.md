@@ -21,7 +21,7 @@ stand-in for your model's actual name. This goes in your application's `views.py
 import csv
 
 from django.http import HttpResponse
-from django.views.generic import ListView,
+from django.views.generic import ListView
 
 
 class MyObjectListView(ListView):
