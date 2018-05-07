@@ -44,7 +44,7 @@ class MyObjectListView(ListView):
           model_dict['fk_obj'] = model.fk_obj.name
           # Here we're grabbing a Django managed m2m and th
           model_dict['topics'] = [topic.name for topic
-                                in ';'.join(model.topics.all())
+                                in ';'.join(model.topics.all())]
                                 # the syntax looks hairy but it isn't -- we're just telling python
                                 # to get all the related topics, and then make a list of their name
                                 # properties and join them with a semi-colon
